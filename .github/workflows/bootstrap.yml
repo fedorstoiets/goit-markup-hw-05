@@ -1,0 +1,29 @@
+name: Bootstrap from HW4
+on:
+  push:
+    paths:
+      - '.github/workflows/bootstrap.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  copy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Copy HTML, CSS, and image assets from HW4
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone --depth 1 https://github.com/fedorstoiets/goit-markup-hw-04.git /tmp/hw4
+          cp /tmp/hw4/index.html ./index.html
+          cp -r /tmp/hw4/css ./css
+          cp -r /tmp/hw4/images ./images
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html css images
+          if ! git diff --cached --quiet; then
+            git commit -m "feat: inherit corrected HW4 markup, styles and assets"
+            git pull --rebase origin main
+            git push
+          fi
