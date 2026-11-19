@@ -21,6 +21,7 @@
     if (event.target === backdrop) close();
   });
   document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && backdrop.classList.contains("is-open")) close();
+    if (event.key === "Escape" && backdrop.classList.contains("is-open"))
+      close();
   });
 })();
